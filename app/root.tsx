@@ -20,6 +20,7 @@ export default function App() {
 						<h1 className="text-mega">Your Journey Begins!</h1>
 						<p className="text-base text-gray-600 md:text-lg lg:text-2xl">
 							Welcome to Epic News, where the latest development in tech are found</p>
+							<button className="bg-black px-8 py-4 font-bold hover:bg to-blue-500">Click me</button>
 					</main>
 				</div>
 			</div>
