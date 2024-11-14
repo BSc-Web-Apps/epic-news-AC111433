@@ -11,19 +11,16 @@ export { action, loader } from './__root.server.tsx'
 
 export default function App() {
 	const nonce = useNonce()
-
+  
 	return (
-		<Document nonce={nonce}>
-			<div className="flex h-screen flex-col justify-between">
-				<div className="flex-1">
-					<main className="grid h-full place-items-center">
-						<h1 className="text-mega">Your Journey Begins!</h1>
-						<p className="text-base text-gray-600 md:text-lg lg:text-2xl">
-							Welcome to Epic News, where the latest development in tech are found</p>
-							<button className="bg-black px-8 py-4 font-bold hover:bg to-blue-500">Click me</button>
-					</main>
-				</div>
-			</div>
-		</Document>
+	  <Document nonce={nonce}>
+		<div className="flex h-screen flex-col justify-between">
+		  <div className="flex-1">
+			<main className="grid h-full place-items-center">
+			  <h1 className="text-mega">Welcome to Epic News!</h1>
+			</main>
+		  </div>
+		</div>
+	  </Document>
 	)
-}
+  }
