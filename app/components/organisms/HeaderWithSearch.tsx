@@ -1,5 +1,4 @@
 import { useMatches } from '@remix-run/react'
-import logo from '~/assets/svg/news.svg'
 import { SearchBar } from '../molecules/SearchBar'
 import LoginOrUserDropdown from './LoginOrUserDropdown'
 
@@ -11,10 +10,6 @@ export default function HeaderWithSearch() {
 	return (
 		<header className="dark:bg-dark-primary/10 bg-primary/10 py-6">
 			<nav className="container flex flex-wrap items-center justify-between gap-4 sm:flex-nowrap md:gap-8">
-				<div>
-					<img src={logo} alt="Epic News Logo" className="w-16" />
-					<span className="text-sm text-foreground">Welcome to Epic News</span>
-				</div>
 				<div className="ml-auto hidden max-w-sm flex-1 sm:block">
 					{searchBar}
 				</div>
