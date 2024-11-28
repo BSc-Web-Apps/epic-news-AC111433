@@ -1,4 +1,5 @@
 import { type LinksFunction } from '@remix-run/node'
+import { Outlet, useLoaderData } from '@remix-run/react'
 import heroImage from '~/assets/jpg/sample-hero.jpg'
 import Document from '~/components/shared-layout/Document'
 import { useNonce } from '~/utils/nonce-provider.ts'
@@ -21,7 +22,7 @@ export default function App() {
 			<div className="flex h-screen flex-col justify-between">
 				<div className="flex-1">
 					<HeaderWithSearch />
-					<main>
+					{/* <main>
 						<div className="w-full">
 							<HeroCallToAction image={heroImage} imageRight={true}>
 								<div className="flex flex-col gap-8 px-8">
@@ -33,7 +34,8 @@ export default function App() {
 								</div>
 							</HeroCallToAction>
 						</div>
-					</main>
+					</main> */}
+					<Outlet />
 					<FooterMenuRight />
 				</div>
 			</div>
