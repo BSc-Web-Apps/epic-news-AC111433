@@ -22,20 +22,9 @@ export default function App() {
 			<div className="flex h-screen flex-col justify-between">
 				<div className="flex-1">
 					<HeaderWithSearch />
-					{/* <main>
-						<div className="w-full">
-							<HeroCallToAction image={heroImage} imageRight={true}>
-								<div className="flex flex-col gap-8 px-8">
-									<h2 className="text-h2">Welcome to Epic News</h2>
-									<p className="text-lg">
-										Keep up to date with the latest tech news.
-									</p>
-									<Button>Sign Up</Button>
-								</div>
-							</HeroCallToAction>
-						</div>
-					</main> */}
+
 					<Outlet />
+
 					<FooterMenuRight />
 				</div>
 			</div>
