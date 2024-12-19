@@ -1,6 +1,6 @@
 import { Links, Meta, Scripts, ScrollRestoration } from '@remix-run/react'
 import { ClientHintCheck } from '~/utils/client-hints'
-import { Theme } from '~/utils/theme.server'
+import { type Theme } from '~/utils/theme.server'
 
 interface DocumentProps {
 	children: React.ReactNode
