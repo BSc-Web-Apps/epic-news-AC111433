@@ -34,6 +34,7 @@ export default function NewsCategoryPage() {
 						className="h-full rounded-full bg-red-600 p-4 hover:bg-red-950"
 						key={article.id}
 					>
+						articleId={article.id}
 						<h3>{article.title}</h3>
 						<p>{article.category?.name || 'General News'}</p>
 					</div>
