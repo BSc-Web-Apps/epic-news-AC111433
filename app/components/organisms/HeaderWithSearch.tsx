@@ -1,7 +1,7 @@
 import { Link, useMatches } from '@remix-run/react'
+import NavLogo from '../molecules/NavLogo'
 import { SearchBar } from '../molecules/SearchBar'
 import LoginOrUserDropdown from './LoginOrUserDropdown'
-import NavLogo from '../molecules/NavLogo'
 interface HeaderWithSearchProps {
 	isAdminUser: boolean
 }
