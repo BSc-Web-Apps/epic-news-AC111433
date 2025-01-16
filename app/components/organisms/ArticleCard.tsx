@@ -5,8 +5,8 @@ import {
 	MdOutlineDesktopMac,
 	MdOutlineNewspaper,
 } from 'react-icons/md'
+import siteLogo from '~/assets/svg/news.svg'
 import { getArticleImgSrc } from '~/utils/misc.tsx'
-import siteLogo from '~/assets/svg/site-logo.svg'
 
 interface ArticleCardProps {
 	articleId: string

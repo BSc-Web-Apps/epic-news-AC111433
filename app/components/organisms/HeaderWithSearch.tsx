@@ -1,6 +1,7 @@
 import { Link, useMatches } from '@remix-run/react'
 import { SearchBar } from '../molecules/SearchBar'
 import LoginOrUserDropdown from './LoginOrUserDropdown'
+import NavLogo from '../molecules/NavLogo'
 interface HeaderWithSearchProps {
 	isAdminUser: boolean
 }
@@ -14,6 +15,7 @@ export default function HeaderWithSearch({
 	return (
 		<header className="dark:bg-dark-primary/10 bg-primary/10 py-6">
 			<nav className="container flex flex-wrap items-center justify-between gap-4 sm:flex-nowrap md:gap-8">
+				<NavLogo />
 				<div className="flex flex-1 justify-center gap-8">
 					{isAdminUser && (
 						<Link

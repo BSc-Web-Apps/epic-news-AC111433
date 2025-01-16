@@ -1,10 +1,10 @@
 import { type MetaFunction } from '@remix-run/node'
 import { json, Link, useLoaderData } from '@remix-run/react'
+import ArticleCard from '#app/components/organisms/ArticleCard.tsx'
 import heroImage from '~/assets/jpg/sample-hero.jpg'
 import { Button } from '~/components/atoms/Button.tsx'
 import HeroCallToAction from '~/components/organisms/Hero/HeroCallToAction.tsx'
 import { prisma } from '~/utils/db.server.ts'
-import ArticleCard from '~/components/organisms/ArticleCard.tsx'
 export const meta: MetaFunction = () => [{ title: 'Epic News' }]
 
 export async function loader() {
