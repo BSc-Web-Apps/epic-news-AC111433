@@ -14,7 +14,6 @@ interface ArticleCardProps {
 	category?: string
 	imageId?: string
 }
-
 export default function ArticleCard({
 	articleId,
 	title,

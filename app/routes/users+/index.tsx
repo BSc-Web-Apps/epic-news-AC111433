@@ -1,113 +1,68 @@
-import { json, redirect, type LoaderFunctionArgs } from '@remix-run/node'
-import { Link, useLoaderData } from '@remix-run/react'
-import { z } from 'zod'
-import { GeneralErrorBoundary } from '#app/components/ErrorBoundary.js'
-import { ErrorList } from '#app/components/forms.tsx'
-import { SearchBar } from '#app/components/search-bar.tsx'
-import { prisma } from '#app/utils/db.server.ts'
-import { cn, getUserImgSrc, useDelayedIsPending } from '#app/utils/misc.tsx'
+import { type MetaFunction } from '@remix-run/node'
+import { json, Link, useLoaderData } from '@remix-run/react'
+import heroImage from '~/assets/jpg/sample-hero.jpg'
+import { Button } from '~/components/atoms/Button.tsx'
+import HeroCallToAction from '~/components/organisms/Hero/HeroCallToAction.tsx'
+import { prisma } from '~/utils/db.server.ts'
+import ArticleCard from '~/components/organisms/ArticleCard.tsx'
+export const meta: MetaFunction = () => [{ title: 'Epic News' }]
 
-const UserSearchResultSchema = z.object({
-	id: z.string(),
-	username: z.string(),
-	name: z.string().nullable(),
-	imageId: z.string().nullable(),
-})
-
-const UserSearchResultsSchema = z.array(UserSearchResultSchema)
-
-export async function loader({ request }: LoaderFunctionArgs) {
-	const searchTerm = new URL(request.url).searchParams.get('search')
-	if (searchTerm === '') {
-		return redirect('/users')
-	}
-
-	const like = `%${searchTerm ?? ''}%`
-	const rawUsers = await prisma.$queryRaw`
-		SELECT User.id, User.username, User.name, UserImage.id AS imageId
-		FROM User
-		LEFT JOIN UserImage ON User.id = UserImage.userId
-		WHERE User.username LIKE ${like}
-		OR User.name LIKE ${like}
-		ORDER BY (
-			SELECT Note.updatedAt
-			FROM Note
-			WHERE Note.ownerId = User.id
-			ORDER BY Note.updatedAt DESC
-			LIMIT 1
-		) DESC
-		LIMIT 50
-	`
-
-	const result = UserSearchResultsSchema.safeParse(rawUsers)
-	if (!result.success) {
-		return json({ status: 'error', error: result.error.message } as const, {
-			status: 400,
-		})
-	}
-	return json({ status: 'idle', users: result.data } as const)
-}
-
-export default function UsersRoute() {
-	const data = useLoaderData<typeof loader>()
-	const isPending = useDelayedIsPending({
-		formMethod: 'GET',
-		formAction: '/users',
+export async function loader() {
+	const allArticles = await prisma.article.findMany({
+		where: { isPublished: true },
+		select: {
+			id: true,
+			title: true,
+			category: { select: { name: true } },
+			images: { select: { id: true } },
+		},
 	})
 
-	if (data.status === 'error') {
-		console.error(data.error)
-	}
-
-	return (
-		<div className="container mb-48 mt-36 flex flex-col items-center justify-center gap-6">
-			<h1 className="text-h1">Epic Notes Users</h1>
-			<div className="w-full max-w-[700px]">
-				<SearchBar status={data.status} autoFocus autoSubmit />
-			</div>
-			<main>
-				{data.status === 'idle' ? (
-					data.users.length ? (
-						<ul
-							className={cn(
-								'flex w-full flex-wrap items-center justify-center gap-4 delay-200',
-								{ 'opacity-50': isPending },
-							)}
-						>
-							{data.users.map(user => (
-								<li key={user.id}>
-									<Link
-										to={user.username}
-										className="flex h-36 w-44 flex-col items-center justify-center rounded-lg bg-muted px-5 py-3"
-									>
-										<img
-											alt={user.name ?? user.username}
-											src={getUserImgSrc(user.imageId)}
-											className="h-16 w-16 rounded-full"
-										/>
-										{user.name ? (
-											<span className="w-full overflow-hidden text-ellipsis whitespace-nowrap text-center text-body-md">
-												{user.name}
-											</span>
-										) : null}
-										<span className="w-full overflow-hidden text-ellipsis text-center text-body-sm text-muted-foreground">
-											{user.username}
-										</span>
-									</Link>
-								</li>
-							))}
-						</ul>
-					) : (
-						<p>No users found</p>
-					)
-				) : data.status === 'error' ? (
-					<ErrorList errors={['There was an error parsing the results']} />
-				) : null}
-			</main>
-		</div>
-	)
+	return json({ allArticles })
 }
 
-export function ErrorBoundary() {
-	return <GeneralErrorBoundary />
+export default function Index() {
+	const { allArticles } = useLoaderData<typeof loader>()
+
+	return (
+		<main>
+			<HeroCallToAction
+				image={heroImage}
+				imageRight={true}
+				hasBackgroundColour={true}
+			>
+				<div className="flex h-full flex-1 flex-col justify-between p-16">
+					<div className="flex flex-col gap-8">
+						<h2 className="text-h2">Welcome to Epic News</h2>
+						<p className="text-lg">
+							Keep up to date with the latest tech news.
+						</p>
+					</div>
+					<Button asChild variant="default" size="lg">
+						<Link to="/signup">Sign up</Link>
+					</Button>
+				</div>
+			</HeroCallToAction>
+
+			<div className="container py-16">
+				<h2 className="mb-8 text-h2 font-normal">Latest news</h2>
+
+				<div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4">
+					{allArticles.length > 0 ? (
+						allArticles.map(article => (
+							<ArticleCard
+								key={article.id}
+								articleId={article.id}
+								title={article.title}
+								category={article.category?.name}
+								imageId={article.images[0]?.id}
+							/>
+						))
+					) : (
+						<p>No articles found</p>
+					)}
+				</div>
+			</div>
+		</main>
+	)
 }
