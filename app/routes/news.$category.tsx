@@ -28,6 +28,7 @@ export default function NewsCategoryPage() {
 	return (
 		<div className="container py-16">
 			<h2 className="mb-6 text-h2">{category}</h2>
+
 			<div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-5">
 				{filteredArticles.map(article => (
 					<div

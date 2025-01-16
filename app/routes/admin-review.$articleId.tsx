@@ -5,10 +5,9 @@ import { ErrorList } from '~/components/forms.tsx'
 import { Icon } from '~/components/ui/icon.tsx'
 import { StatusButton } from '~/components/ui/status-button.tsx'
 import { getArticleImgSrc, useIsPending } from '~/utils/misc.tsx'
-
 import { type action, type loader } from './__admin-review.$articleId.server'
 import { GeneralErrorBoundary } from '~/components/ErrorBoundary.js'
-export { action, loader } from './ admin-review.$articleId.server'
+export { action, loader } from './__admin-review.$articleId.server'
 
 export default function AdminReviewRoute() {
 	const data = useLoaderData<typeof loader>()
