@@ -10,9 +10,9 @@ const FooterBasic = ({
 	altText = 'Our company logo',
 }: FooterProps) => {
 	return (
-		<footer className="dark:bg-dark-secondary bg-secondary py-16">
+		<footer className="bg-secondary py-16 dark:bg-slate-50">
 			<div className="container flex flex-col items-center justify-between gap-y-8 lg:flex-row">
-				<div className="w-18">
+				<div className="w-16">
 					<img src={logo} alt={altText} />
 				</div>
 
