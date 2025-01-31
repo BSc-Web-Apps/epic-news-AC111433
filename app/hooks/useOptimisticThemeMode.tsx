@@ -1,6 +1,6 @@
+import { parseWithZod } from '@conform-to/zod'
 import { useFetchers } from '@remix-run/react'
 import { z } from 'zod'
-import { parseWithZod } from '@conform-to/zod'
 
 export const ThemeFormSchema = z.object({
 	theme: z.enum(['system', 'light', 'dark']),
